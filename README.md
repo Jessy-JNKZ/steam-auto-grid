@@ -2,7 +2,7 @@
 
 [🇫🇷 Français](#français) • [🇬🇧 English](#english)
 
-![Steam Auto-Grid Preview](image.png)
+![Steam Auto-Grid Preview](./image.png)
 
 ---
 
