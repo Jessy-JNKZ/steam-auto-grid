@@ -1,60 +1,76 @@
-# Steam Auto-Grid
+<div align="center">
+  <img src="./images/icon.png" width="110" alt="Steam Auto-Grid Logo" />
+  <h1>Steam Auto-Grid</h1>
+  <p>
+    <strong>One-click Non-Steam game library injector, SteamVR manifest generator &amp; official artwork downloader for Windows.</strong>
+  </p>
 
-[🇫🇷 Français](#français) • [🇬🇧 English](#english)
+  <p>
+    <a href="https://github.com/Jessy-JNKZ/steam-auto-grid/releases/latest">
+      <img src="https://img.shields.io/github/v/release/Jessy-JNKZ/steam-auto-grid?style=for-the-badge&color=00FF38&labelColor=11151C&label=Release" alt="Latest Release" />
+    </a>
+    <img src="https://img.shields.io/badge/Platform-Windows%2010%20%2F%2011-00A8FF?style=for-the-badge&labelColor=11151C" alt="Platform Windows" />
+    <img src="https://img.shields.io/badge/Python-3.10%2B-FF8C00?style=for-the-badge&labelColor=11151C" alt="Python 3.10+" />
+    <img src="https://img.shields.io/github/license/Jessy-JNKZ/steam-auto-grid?style=for-the-badge&color=A820FF&labelColor=11151C" alt="License" />
+  </p>
 
-![Steam Auto-Grid Preview](./image.png)
+  <p>
+    <a href="README.fr.md">🇫🇷 Lire en Français</a> • <strong>🇬🇧 English</strong> • <a href="https://github.com/Jessy-JNKZ/steam-auto-grid/releases">📥 Download (.exe)</a>
+  </p>
+</div>
 
 ---
 
-## Français
+<div align="center">
+  <img src="./images/Steam-Auto-Grid.png" alt="Steam Auto-Grid Interface Preview" width="820" />
+</div>
 
-Outil Windows léger avec interface moderne permettant d'ajouter automatiquement un jeu non-Steam à votre bibliothèque et d'injecter ses 4 visuels officiels (**Couverture 600x900**, **Bannière Hero**, **Logo transparent** et **Grande couverture Header**) en un clic.
+---
 
-### Fonctionnalités
-- **Détection automatique de Steam** et du profil utilisateur actif via le Registre Windows.
-- **Scan intelligent du dossier du jeu** : repère l'exécutable principal (en ignorant les désinstalleurs/redistribuables) et détecte automatiquement l'AppID Steam officiel via les fichiers locaux (`steam_appid.txt`, `.ini`) ou via l'API publique du magasin Steam.
-- **Prévisualisation en temps réel** des 4 jaquettes avant l'injection.
-- **Injection native dans `shortcuts.vdf`** avec sauvegarde de sécurité automatique (`shortcuts.vdf.bak`), fermeture forcée et relancement automatique de Steam, et prévention des doublons.
+## ✨ Key Features
 
-### Utilisation (Version compilée)
-1. Téléchargez `Steam-Auto-Grid.exe` depuis l'onglet **Releases**.
-2. Lancez l'application (ou placez-la directement dans le dossier d'un jeu pour une détection immédiate).
-3. Vérifiez l'aperçu des jaquettes et cliquez sur **AJOUTER À STEAM & INJECTER LES IMAGES**.
+- **🔍 Automatic Steam & Profile Detection:** Locates your Steam installation path and active user account (`userdata`) directly via the Windows Registry.
+- **🎯 Smart Game Folder Scanner:** Automatically identifies the main executable (filtering out uninstallers and redistributables) and detects the official Steam AppID from local files (`steam_appid.txt`, `.ini`) or via the Steam Store Search API.
+- **🥽 Native SteamVR Library Integration (`OpenVR`):**
+  - Detects VR runtimes (`openvr_api.dll`, `openxr_loader.dll`, `OVRPlugin.dll`, `OpenVR`/`Oculus` folders) and official Steam Store VR categories (*VR Only* / *VR Supported*).
+  - Enables `OpenVR = 1` in `shortcuts.vdf`, generates `steam.app.<id>.vrmanifest` & `.vrappconfig`, and registers the app in `Steam\config\appconfig.json` so your game appears directly inside your VR headset dashboard.
+- **🖼️ Live 4-Asset Grid Preview & Injection:** Fetches and previews all 4 official Steam grid artworks before injecting them into `config\grid\`:
 
-### Compilation depuis les sources
-Assurez-vous d'avoir Python 3.10+ installé, puis lancez simplement :
+| Color Code | Artwork Type | Target Filename | Resolution / Format |
+| :---: | :--- | :--- | :--- |
+| 🟦 **Blue** | **Library Cover** | `<appid>p.jpg` | `600x900` Vertical Poster |
+| 🟩 **Green** | **Hero Banner** | `<appid>_hero.jpg` | `1920x620` Background Banner |
+| 🟧 **Orange** | **Transparent Logo** | `<appid>_logo.png` | Transparent `PNG` Overlay |
+| 🟪 **Purple** | **Header Capsule** | `<appid>.jpg` | `460x215` Recent Games Grid |
+
+- **🔄 Built-in Auto-Updater:** Checks GitHub Releases silently at startup (or on-demand via the top bar button) and updates `Steam-Auto-Grid.exe` in-place automatically.
+- **🛡️ Safe `shortcuts.vdf` Injection:** Creates an automatic `shortcuts.vdf.bak` backup, safely closes Steam & SteamVR (with automatic UAC elevation if needed), prevents duplicate entries, and relaunches Steam automatically.
+
+---
+
+## 🚀 Usage (Compiled Release)
+
+1. Download **`Steam-Auto-Grid.exe`** from the [**Releases**](https://github.com/Jessy-JNKZ/steam-auto-grid/releases/latest) page.
+2. Run the executable anywhere (or drop it directly into a game's root folder for instant auto-detection).
+3. Verify the game name, AppID, VR toggle, and 4 artwork previews.
+4. Click **`AJOUTER À STEAM & INJECTER LES IMAGES`** — Steam will restart automatically with your game and artwork ready.
+
+---
+
+## 🛠️ Build from Source
+
+Make sure **Python 3.10+** is installed on Windows, place `icon.png` and `icon.ico` at the repository root, and run:
+
 ```bat
 build.bat
 ```
-L'exécutable autonome sera généré dans `dist\Steam-Auto-Grid.exe`.
+
+`build.bat` automatically installs dependencies, generates a multi-size Windows `.ico`, and outputs the standalone executable in `dist\Steam-Auto-Grid.exe`.
 
 ---
 
-## English
+## 👤 Author
 
-Lightweight Windows utility with a modern dark UI that automatically adds non-Steam games to your library and injects all 4 official artwork assets (**600x900 Cover**, **Hero Banner**, **Transparent Logo**, and **Header**) in one click.
-
-### Features
-- **Automatic Steam Detection:** Locates your Steam installation and active user profile via the Windows Registry.
-- **Smart Game Folder Scan:** Identifies the main executable (filtering out uninstallers/redistributables) and detects the official Steam AppID from local files (`steam_appid.txt`, `.ini`) or via the Steam Store search API.
-- **Live Artwork Preview:** Previews all 4 cover assets directly inside the interface before injecting.
-- **Native `shortcuts.vdf` Injection:** Creates an automatic `shortcuts.vdf.bak` backup, safely closes and relaunches Steam automatically, and prevents duplicate entries.
-
-### Usage (Compiled Release)
-1. Download `Steam-Auto-Grid.exe` from the **Releases** tab.
-2. Run the application anywhere (or place it inside a game's root folder for instant auto-detection).
-3. Check the artwork preview and click **AJOUTER À STEAM & INJECTER LES IMAGES**.
-
-### Build from Source
-Make sure Python 3.10+ is installed, then run:
-```bat
-build.bat
-```
-The standalone executable will be generated in `dist\Steam-Auto-Grid.exe`.
-
----
-
-## Auteur / Author
-Développé par / Developed by **Jessy JONKISZ**  
-- GitHub : [@Jessy-JNKZ](https://github.com/Jessy-JNKZ)  
-- X (Twitter) : [@JNKZJessy](https://x.com/JNKZJessy)
+Developed by **Jessy JONKISZ**  
+- GitHub: [@Jessy-JNKZ](https://github.com/Jessy-JNKZ)  
+- X (Twitter): [@JNKZJessy](https://x.com/JNKZJessy)
